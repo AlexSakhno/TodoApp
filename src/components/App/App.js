@@ -6,11 +6,7 @@ import React from 'react'
 
 export default class App extends React.Component {
 	state = {
-		todoData: [
-			{ id: 1, label: 'Completed task', done: false },
-			{ id: 2, label: 'Editing task', done: false },
-			{ id: 3, label: 'Active task', done: false },
-		],
+		todoData: JSON.parse(localStorage.getItem('state')) || [],
 		filter: 'all',
 	}
 
@@ -24,13 +20,18 @@ export default class App extends React.Component {
 
 	addItem = value => {
 		const newId = this.state.todoData.length + 1
+
+		const currentDate = new Date()
+
 		const newItem = {
 			id: newId,
 			label: value,
 			done: false,
+			date: String(currentDate),
 		}
 
 		this.setState(({ todoData }) => {
+			localStorage.setItem('state', JSON.stringify([...todoData, newItem]))
 			return {
 				todoData: [...todoData, newItem],
 			}
@@ -38,15 +39,25 @@ export default class App extends React.Component {
 	}
 
 	deleteItem = id => {
+		localStorage.clear()
 		this.setState(({ todoData }) => ({
 			todoData: todoData.filter(el => el.id !== id),
 		}))
+		localStorage.setItem(
+			'state',
+			JSON.stringify(this.state.todoData.filter(el => el.id !== id))
+		)
 	}
 
 	deleteCompletedItem = () => {
+		localStorage.clear()
 		this.setState(({ todoData }) => ({
 			todoData: todoData.filter(el => !el.done),
 		}))
+		localStorage.setItem(
+			'state',
+			JSON.stringify(this.state.todoData.filter(el => !el.done))
+		)
 	}
 
 	filter(items, filter) {
@@ -77,7 +88,7 @@ export default class App extends React.Component {
 					<TaskList
 						todos={visibleItems}
 						onDeleted={this.deleteItem}
-						onComleted={this.completeItem}
+						onCompleted={this.completeItem}
 					/>
 					<Footer
 						countTodo={countActiveTask}

@@ -2,7 +2,7 @@ import './TaskList.css'
 
 import Task from '../Task/Task'
 
-const TaskList = ({ todos, onDeleted, onComleted }) => {
+const TaskList = ({ todos, onDeleted, onCompleted }) => {
 	const tasks = todos.map(item => {
 		const { id, ...itemProps } = item
 		return (
@@ -10,7 +10,7 @@ const TaskList = ({ todos, onDeleted, onComleted }) => {
 				<Task
 					{...itemProps}
 					onDeleted={() => onDeleted(id)}
-					onComleted={() => onComleted(id)}
+					onCompleted={() => onCompleted(id)}
 				/>
 			</li>
 		)
