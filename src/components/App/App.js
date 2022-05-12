@@ -19,6 +19,10 @@ export default class App extends React.Component {
 	}
 
 	addItem = value => {
+		if (!value) {
+			alert('Укажите наименование задачи')
+			return
+		}
 		const newId = this.state.todoData.length + 1
 
 		const currentDate = new Date()
