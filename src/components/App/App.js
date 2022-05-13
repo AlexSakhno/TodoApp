@@ -10,10 +10,10 @@ export default class App extends React.Component {
     filter: 'all',
   };
 
-  completeItem = (id) => {
-    this.setState(({ todoData }) => ({
+  onToggle = (id) => {
+    this.setState(({ todoData }) => ({      
       todoData: todoData.map((el) => (el.id === id ? { ...el, done: !el.done } : el)),
-    }));
+    }));    
   };
 
   addItem = (value) => {
@@ -48,7 +48,10 @@ export default class App extends React.Component {
       const idx = todoData.findIndex((el) => el.id === id);
       const newTodo = { ...todoData[idx], label };
       const newTodos = [...todoData];
+
       newTodos.splice(idx, 1, newTodo);
+
+      localStorage.setItem('state', JSON.stringify(newTodos));
     return {
       todoData: newTodos,
     }; 
@@ -73,8 +76,6 @@ export default class App extends React.Component {
 
   filter(items, filter) {
     switch (filter) {
-      case 'all':
-        return items;
       case 'active':
         return items.filter((item) => !item.done);
       case 'completed':
@@ -96,7 +97,7 @@ export default class App extends React.Component {
       <section className="todoapp">
         <Header onAddItem={this.addItem} />
         <section className="main">
-          <TaskList todos={visibleItems} onDeleted={this.deleteItem} onCompleted={this.completeItem} 
+          <TaskList todos={visibleItems} onDeleted={this.deleteItem} onToggle={this.onToggle} 
             editTask={this.editItem}
           />
           <Footer

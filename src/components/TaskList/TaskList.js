@@ -5,13 +5,13 @@ import React from 'react';
 
 export default class TaskList extends React.Component{ 
   render() {
-  const { todos, onDeleted, onCompleted, editTask} = this.props;
+  const { todos, onDeleted, onToggle, editTask} = this.props;
   
   const tasks = todos.map((item) => {
     const { id, ...itemProps } = item;
     return (
       
-        <Task key={id} {...itemProps} onDeleted={() => onDeleted(id)} onCompleted={() => onCompleted(id)} editTask={(label)=> editTask(id, label)}/>
+        <Task key={id} {...itemProps} onDeleted={() => onDeleted(id)} onToggle={() => onToggle(id)} editTask={(label)=> editTask(id, label)}/>
       
     );
   });

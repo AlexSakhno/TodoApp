@@ -37,7 +37,7 @@ export default class Task extends React.Component {
   };
 
   render() {
-    const { done, label, date, onDeleted, onCompleted } = this.props;
+    const { done, label, date, onDeleted, onToggle } = this.props;
     const { edit } = this.state;  
 
     const currentDate = new Date();
@@ -49,7 +49,7 @@ export default class Task extends React.Component {
     return (
       <li className={done ? 'completed' : '' || edit ? 'editing' : ''}>
       <div className="view">
-        <input type="checkbox" className="toggle" onClick={onCompleted} defaultChecked={done ? 'checked' : ''} />
+        <input type="checkbox" className="toggle" onClick={onToggle} defaultChecked={done ? 'checked' : ''} />
         <label htmlFor="">
           <span className="description">{label}</span>
           <span className="created">created {agoTime}</span>
