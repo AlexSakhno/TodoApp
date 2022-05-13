@@ -1,14 +1,14 @@
-import './Header.css'
+import './Header.css';
 
-import NewTaskForm from '../NewTaskForm/NewTaskForm'
+import NewTaskForm from '../NewTaskForm/NewTaskForm';
 
 const Header = ({ onAddItem }) => {
-	return (
-		<header className='header'>
-			<h1>todos</h1>
-			<NewTaskForm onAddItem={onAddItem} />
-		</header>
-	)
-}
+  return (
+    <header className="header">
+      <h1>todos</h1>
+      <NewTaskForm onAddItem={onAddItem} />
+    </header>
+  );
+};
 
-export default Header
+export default Header;
