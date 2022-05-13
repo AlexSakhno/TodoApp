@@ -42,6 +42,19 @@ export default class App extends React.Component {
     });
   };
 
+
+  editItem = (id, label) => {
+    this.setState(({ todoData }) => {
+      const idx = todoData.findIndex((el) => el.id === id);
+      const newTodo = { ...todoData[idx], label };
+      const newTodos = [...todoData];
+      newTodos.splice(idx, 1, newTodo);
+    return {
+      todoData: newTodos,
+    }; 
+    });
+  };
+
   deleteItem = (id) => {
     localStorage.clear();
     this.setState(({ todoData }) => ({
@@ -83,7 +96,9 @@ export default class App extends React.Component {
       <section className="todoapp">
         <Header onAddItem={this.addItem} />
         <section className="main">
-          <TaskList todos={visibleItems} onDeleted={this.deleteItem} onCompleted={this.completeItem} />
+          <TaskList todos={visibleItems} onDeleted={this.deleteItem} onCompleted={this.completeItem} 
+            editTask={this.editItem}
+          />
           <Footer
             countTodo={countActiveTask}
             onDeleteCompleted={this.deleteCompletedItem}
