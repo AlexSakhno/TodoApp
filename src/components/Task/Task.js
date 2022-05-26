@@ -52,6 +52,11 @@ export default class Task extends React.Component {
         <input type="checkbox" className="toggle" onClick={onToggle} defaultChecked={done ? 'checked' : ''} />
         <label htmlFor="">
           <span className="description">{label}</span>
+                 <span class="description">
+                  <button class="icon icon-play"></button>
+                  <button class="icon icon-pause"></button>
+                  12:25
+                </span>
           <span className="created">created {agoTime}</span>
         </label>
         <button className="icon icon-edit" onClick={this.startEditing}></button>
