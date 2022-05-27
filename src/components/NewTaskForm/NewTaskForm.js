@@ -1,37 +1,74 @@
-import React from 'react';
-import './NewTaskForm.css';
+import React from 'react'
+import './NewTaskForm.css'
 
 export default class NewTaskForm extends React.Component {
-  state = {
-    label: '',
-  };
+	state = {
+		label: '',
+		min: '',
+		sec: '',
+	}
 
-  onChangeLabel = (e) => {
-    this.setState({
-      label: e.target.value,
-    });
-  };
+	onChangeLabel = e => {
+		this.setState({
+			label: e.target.value,
+		})
+	}
 
-  onSubmit = (e) => {
-    e.preventDefault();
-    this.props.onAddItem(this.state.label);
+	onChangeMin = e => {
+		this.setState({
+			min: e.target.value,
+		})
+	}
 
-    this.setState({
-      label: '',
-    });
-  };
+	onChangeSec = e => {
+		this.setState({
+			sec: e.target.value,
+		})
+	}
 
-  render() {
-    return (
-      <form onSubmit={this.onSubmit}>
-        <input
-          className="new-todo"
-          placeholder="What needs to be done?"
-          autoFocus
-          onChange={this.onChangeLabel}
-          value={this.state.label}
-        ></input>
-      </form>
-    );
-  }
+	onSubmit = e => {
+		e.preventDefault()
+
+		let { label, min, sec } = this.state
+
+		if (min === '') min = 1
+		if (sec === '') min = 0
+
+		this.props.onAddItem(label, min, sec)
+
+		this.setState({
+			label: '',
+			min: '',
+			sec: '',
+		})
+	}
+
+	render() {
+		return (
+			<form className='new-todo-form' onSubmit={this.onSubmit}>
+				<input
+					className='new-todo'
+					placeholder='What needs to be done?'
+					autoFocus
+					onChange={this.onChangeLabel}
+					value={this.state.label}
+				></input>
+				<input
+					type='number'
+					className='new-todo-form__timer'
+					placeholder='Min'
+					onChange={this.onChangeMin}
+					value={this.state.min}
+				></input>
+				<input
+					type='number'
+					className='new-todo-form__timer'
+					placeholder='Sec'
+					onChange={this.onChangeSec}
+					value={this.state.sec}
+				></input>
+				<input type='submit' className='submitTask'></input>
+			</form>
+		)
+	}
 }
