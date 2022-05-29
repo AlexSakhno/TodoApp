@@ -13,7 +13,7 @@ const App = () => {
 
 	useEffect(() => {
 		setState(() => ({
-			todoData: JSON.parse(localStorage.getItem('state')),
+			todoData: [],
 			filter: 'all',
 		}))
 	}, [])
@@ -46,7 +46,6 @@ const App = () => {
 		}
 
 		setState(({ todoData }) => {
-			localStorage.setItem('state', JSON.stringify([...todoData, newItem]))
 			return {
 				todoData: [...todoData, newItem],
 			}
@@ -61,7 +60,6 @@ const App = () => {
 
 			newTodos.splice(idx, 1, newTodo)
 
-			localStorage.setItem('state', JSON.stringify(newTodos))
 			return {
 				todoData: newTodos,
 			}
@@ -69,25 +67,15 @@ const App = () => {
 	}
 
 	const deleteItem = id => {
-		localStorage.clear()
 		setState(({ todoData }) => ({
 			todoData: todoData.filter(el => el.id !== id),
 		}))
-		localStorage.setItem(
-			'state',
-			JSON.stringify(state.todoData.filter(el => el.id !== id))
-		)
 	}
 
 	const deleteCompletedItem = () => {
-		localStorage.clear()
 		setState(({ todoData }) => ({
 			todoData: todoData.filter(el => !el.done),
 		}))
-		localStorage.setItem(
-			'state',
-			JSON.stringify(state.todoData.filter(el => !el.done))
-		)
 	}
 
 	function filters(items, filter) {
@@ -102,7 +90,7 @@ const App = () => {
 	}
 
 	const onChangeFilter = filter => {
-		setState({ ...state, filter })
+		setState({ ...state, filter: filter })
 	}
 
 	const { todoData, filter } = state
