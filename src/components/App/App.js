@@ -8,12 +8,13 @@ import './App.css'
 const App = () => {
 	const [state, setState] = useState(() => ({
 		todoData: [],
-		filter: 'all',
+		filter: null,
 	}))
 
 	useEffect(() => {
 		setState(() => ({
 			todoData: JSON.parse(localStorage.getItem('state')),
+			filter: 'all',
 		}))
 	}, [])
 
@@ -101,12 +102,13 @@ const App = () => {
 	}
 
 	const onChangeFilter = filter => {
-		setState({ filter })
+		setState({ ...state, filter })
 	}
 
 	const { todoData, filter } = state
 	const visibleItems = filters(todoData, filter)
 	const countActiveTask = todoData.filter(el => !el.done).length
+
 	return (
 		<section className='todoapp'>
 			<Header onAddItem={addItem} />
