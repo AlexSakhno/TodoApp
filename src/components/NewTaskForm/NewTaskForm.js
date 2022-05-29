@@ -33,8 +33,8 @@ export default class NewTaskForm extends React.Component {
 
 		if (min === '') min = 1
 		if (sec === '') min = 0
-
-		this.props.onAddItem(label, min, sec)
+		const timeout = (min * 60 || 0) + (+sec || 0)
+		this.props.onAddItem(label, timeout)
 
 		this.setState({
 			label: '',

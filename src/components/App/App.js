@@ -25,7 +25,7 @@ const App = () => {
 		}))
 	}
 
-	const addItem = (value, min, sec) => {
+	const addItem = (value, timeout) => {
 		if (!value) {
 			alert('Укажите наименование задачи')
 			return
@@ -41,8 +41,7 @@ const App = () => {
 			label: value,
 			done: false,
 			date: String(currentDate),
-			min: min,
-			sec: sec,
+			timer: timeout,
 		}
 
 		setState(({ todoData }) => {

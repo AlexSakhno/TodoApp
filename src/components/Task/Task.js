@@ -1,6 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { formatDistance } from 'date-fns'
+import { formatDistance, intervalToDuration, setMinutes } from 'date-fns'
+
+import Timer from '../Timer/Timer'
+
 import './Task.css'
 
 export default class Task extends React.Component {
@@ -37,7 +40,8 @@ export default class Task extends React.Component {
 	}
 
 	render() {
-		const { done, label, date, min, sec, onDeleted, onToggle } = this.props
+		const { done, label, date, onDeleted, onToggle, timer } = this.props
+
 		const { edit } = this.state
 
 		const currentDate = new Date()
@@ -57,13 +61,7 @@ export default class Task extends React.Component {
 					/>
 					<label htmlFor=''>
 						<span className='title'>{label}</span>
-						<span className='description'>
-							<button className='icon icon-play'></button>
-							<button className='icon icon-pause'></button>
-							<span className='timer_time'>
-								{min}:{sec}
-							</span>
-						</span>
+						<Timer timer={timer} />
 						<span className='description'>created {agoTime}</span>
 					</label>
 					<button
