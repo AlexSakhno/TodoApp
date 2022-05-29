@@ -107,6 +107,7 @@ const App = () => {
 
 	const { todoData, filter } = state
 	const visibleItems = filters(todoData, filter)
+
 	const countActiveTask = todoData.filter(el => !el.done).length
 
 	return (
