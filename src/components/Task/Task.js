@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { formatDistance, intervalToDuration, setMinutes } from 'date-fns'
+import { formatDistance } from 'date-fns'
 
 import Timer from '../Timer/Timer'
 
