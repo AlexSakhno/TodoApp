@@ -1,74 +1,78 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './NewTaskForm.css'
 
-export default class NewTaskForm extends React.Component {
-	state = {
+const NewTaskForm = props => {
+	const [newTask, setNewTask] = useState(() => ({
 		label: '',
 		min: '',
 		sec: '',
-	}
+	}))
 
-	onChangeLabel = e => {
-		this.setState({
+	const onChangeLabel = e => {
+		setNewTask(() => ({
+			...newTask,
 			label: e.target.value,
-		})
+		}))
 	}
 
-	onChangeMin = e => {
-		this.setState({
+	const onChangeMin = e => {
+		setNewTask(() => ({
+			...newTask,
 			min: e.target.value,
-		})
+		}))
 	}
 
-	onChangeSec = e => {
-		this.setState({
+	const onChangeSec = e => {
+		setNewTask(() => ({
+			...newTask,
 			sec: e.target.value,
-		})
+		}))
 	}
 
-	onSubmit = e => {
+	const onSubmit = e => {
 		e.preventDefault()
 
-		let { label, min, sec } = this.state
+		let { label, min, sec } = newTask
 
 		if (min === '') min = 1
 		if (sec === '') min = 0
 		const timeout = (min * 60 || 0) + (+sec || 0)
-		this.props.onAddItem(label, timeout)
+		props.onAddItem(label, timeout)
 
-		this.setState({
+		setNewTask(() => ({
+			...newTask,
 			label: '',
 			min: '',
 			sec: '',
-		})
+		}))
 	}
 
-	render() {
-		return (
-			<form className='new-todo-form' onSubmit={this.onSubmit}>
-				<input
-					className='new-todo'
-					placeholder='What needs to be done?'
-					autoFocus
-					onChange={this.onChangeLabel}
-					value={this.state.label}
-				></input>
-				<input
-					type='number'
-					className='new-todo-form__timer'
-					placeholder='Min'
-					onChange={this.onChangeMin}
-					value={this.state.min}
-				></input>
-				<input
-					type='number'
-					className='new-todo-form__timer'
-					placeholder='Sec'
-					onChange={this.onChangeSec}
-					value={this.state.sec}
-				></input>
-				<input type='submit' className='submitTask'></input>
-			</form>
-		)
-	}
+	return (
+		<form className='new-todo-form' onSubmit={onSubmit}>
+			<input
+				className='new-todo'
+				placeholder='What needs to be done?'
+				autoFocus
+				onChange={onChangeLabel}
+				value={newTask.label}
+			></input>
+			<input
+				type='number'
+				className='new-todo-form__timer'
+				placeholder='Min'
+				onChange={onChangeMin}
+				value={newTask.min}
+			></input>
+			<input
+				type='number'
+				className='new-todo-form__timer'
+				placeholder='Sec'
+				onChange={onChangeSec}
+				value={newTask.sec}
+			></input>
+			<input type='submit' className='submitTask'></input>
+		</form>
+	)
 }
+
+export default NewTaskForm

@@ -1,59 +1,59 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
-export default class Timer extends React.Component {
-	state = {
+const Timer = props => {
+	const [timer, setTimer] = useState(() => ({
 		active: false,
 		timeLeft: null,
 		timerId: null,
-	}
+	}))
 
-	componentDidMount() {
-		this.setState({ timeLeft: this.props.timer })
-	}
+	useEffect(() => {
+		setTimer(() => ({ timeLeft: props.timer }))
+	}, [])
 
-	stepTimer = () => {
-		const { timeLeft } = this.state
+	const stepTimer = () => {
+		const { timeLeft } = timer
 		if (!timeLeft) {
-			this.stopTimer()
+			stopTimer()
 			return
 		}
-		this.setState(({ timeLeft }) => ({ timeLeft: timeLeft - 1 }))
+		setTimer(({ timeLeft }) => ({ timeLeft: timeLeft - 1 }))
 	}
 
-	playTimer = () => {
-		let { active } = this.state
+	const playTimer = () => {
+		let { active } = timer
 		if (!active) {
-			let timerId = setInterval(this.stepTimer, 1000)
-			this.setState({ active: true, timerId: timerId })
+			let timerId = setInterval(stepTimer, 1000)
+			setTimer(() => ({ ...timer, active: true, timerId: timerId }))
 		}
 	}
 
-	stopTimer = () => {
-		const { active, timerId } = this.state
+	const stopTimer = () => {
+		const { active, timerId } = timer
 
 		if (active) {
 			clearInterval(timerId)
-			this.setState({ active: false, timerId: null })
+			setTimer(() => ({ ...timer, active: false, timerId: null }))
 		}
 	}
 
-	formatTime = value => {
+	const formatTime = value => {
 		return `0${value}`.slice(-2)
 	}
 
-	render() {
-		const { timeLeft } = this.state
-		const minutes = Math.trunc(timeLeft / 60)
-		const seconds = timeLeft % 60
+	const { timeLeft } = timer
+	const minutes = Math.trunc(timeLeft / 60)
+	const seconds = timeLeft % 60
 
-		return (
-			<span className='description'>
-				<button className='icon icon-play' onClick={this.playTimer}></button>
-				<button className='icon icon-pause' onClick={this.stopTimer}></button>
-				<span className='timer_time'>
-					{this.formatTime(minutes)}:{this.formatTime(seconds)}
-				</span>
+	return (
+		<span className='description'>
+			<button className='icon icon-play' onClick={playTimer}></button>
+			<button className='icon icon-pause' onClick={stopTimer}></button>
+			<span className='timer_time'>
+				{formatTime(minutes)}:{formatTime(seconds)}
 			</span>
-		)
-	}
+		</span>
+	)
 }
+
+export default Timer
