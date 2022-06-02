@@ -81,7 +81,7 @@ const App = () => {
 	const visibleItems = filters(todoData, filter)
 
 	const countActiveTask = todoData.filter(el => !el.done).length
-
+	console.log('render')
 	return (
 		<section className='todoapp'>
 			<Header onAddItem={addItem} />
