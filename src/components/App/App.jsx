@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 
 import Header from '../Header/Header'
 import TaskList from '../TaskList/TaskList'
@@ -8,22 +8,14 @@ import './App.css'
 const App = () => {
 	const [state, setState] = useState(() => ({
 		todoData: [],
-		filter: null,
+		filter: 'all',
 	}))
 
-	useEffect(() => {
-		setState(() => ({
-			todoData: [],
-			filter: 'all',
-		}))
-	}, [])
-
 	const onToggle = id => {
-		setState(({ todoData }) => ({
-			todoData: todoData.map(el =>
-				el.id === id ? { ...el, done: !el.done } : el
-			),
-		}))
+		const toggleItem = todoData.map(el =>
+			el.id === id ? { ...el, done: !el.done } : el
+		)
+		setState(() => ({ ...state, todoData: toggleItem }))
 	}
 
 	const addItem = (value, timeout) => {
@@ -45,37 +37,29 @@ const App = () => {
 			timer: timeout,
 		}
 
-		setState(({ todoData }) => {
-			return {
-				todoData: [...todoData, newItem],
-			}
-		})
+		setState(() => ({ ...state, todoData: [...todoData, newItem] }))
 	}
 
 	const editItem = (id, label) => {
-		setState(({ todoData }) => {
-			const idx = todoData.findIndex(el => el.id === id)
-			const newTodo = { ...todoData[idx], label }
-			const newTodos = [...todoData]
+		const idx = todoData.findIndex(el => el.id === id)
+		const newTodo = { ...todoData[idx], label }
+		const newTodos = [...todoData]
 
-			newTodos.splice(idx, 1, newTodo)
+		newTodos.splice(idx, 1, newTodo)
 
-			return {
-				todoData: newTodos,
-			}
-		})
+		setState(() => ({ ...state, todoData: newTodos }))
 	}
 
 	const deleteItem = id => {
-		setState(({ todoData }) => ({
-			todoData: todoData.filter(el => el.id !== id),
-		}))
+		const deleteItem = todoData.filter(el => el.id !== id)
+
+		setState(() => ({ ...state, todoData: deleteItem }))
 	}
 
 	const deleteCompletedItem = () => {
-		setState(({ todoData }) => ({
-			todoData: todoData.filter(el => !el.done),
-		}))
+		const deleteItems = todoData.filter(el => !el.done)
+
+		setState(() => ({ ...state, todoData: deleteItems }))
 	}
 
 	function filters(items, filter) {

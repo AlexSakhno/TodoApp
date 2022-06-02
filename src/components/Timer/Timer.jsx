@@ -5,9 +5,11 @@ const Timer = props => {
 	const [timeLeft, setTimeLeft] = useState(null)
 	const [timerId, setTimerId] = useState(null)
 
+	const timer = props.timer
+
 	useEffect(() => {
-		setTimeLeft(props.timer)
-	}, [])
+		setTimeLeft(timer)
+	}, [timer])
 
 	const stepTimer = () => {
 		if (!timeLeft) {

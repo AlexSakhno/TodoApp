@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import PropTypes from 'prop-types'
 import { formatDistance } from 'date-fns'
 
 import Timer from '../Timer/Timer'
@@ -7,16 +6,16 @@ import Timer from '../Timer/Timer'
 import './Task.css'
 
 const Task = props => {
-	const [editState, setEdit] = useState(() => ({
+	const [editState, setEdit] = useState({
 		edit: false,
-	}))
+	})
 
 	const startEditing = () => {
 		setEdit(() => ({ edit: true }))
 	}
 
 	const onEditing = evt => {
-		const { editTask } = this.props
+		const { editTask } = props
 		if (evt.keyCode === 13) {
 			editTask(evt.target.value)
 			setEdit(() => ({ edit: false }))

@@ -1,32 +1,24 @@
 import React, { useState } from 'react'
+
 import './NewTaskForm.css'
 
 const NewTaskForm = props => {
-	const [newTask, setNewTask] = useState(() => ({
+	const [newTask, setNewTask] = useState({
 		label: '',
 		min: '',
 		sec: '',
-	}))
+	})
 
 	const onChangeLabel = e => {
-		setNewTask(() => ({
-			...newTask,
-			label: e.target.value,
-		}))
+		setNewTask(() => ({ ...newTask, label: e.target.value }))
 	}
 
 	const onChangeMin = e => {
-		setNewTask(() => ({
-			...newTask,
-			min: e.target.value,
-		}))
+		setNewTask(() => ({ ...newTask, min: e.target.value }))
 	}
 
 	const onChangeSec = e => {
-		setNewTask(() => ({
-			...newTask,
-			sec: e.target.value,
-		}))
+		setNewTask(() => ({ ...newTask, sec: e.target.value }))
 	}
 
 	const onSubmit = e => {
@@ -45,6 +37,10 @@ const NewTaskForm = props => {
 			min: '',
 			sec: '',
 		}))
+	}
+
+	const inputForm = {
+		taskLabel: [],
 	}
 
 	return (
