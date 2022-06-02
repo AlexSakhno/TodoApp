@@ -39,33 +39,48 @@ const NewTaskForm = props => {
 		}))
 	}
 
-	const inputForm = {
-		taskLabel: [],
-	}
+	const inputForm = [
+		{
+			classes: 'new-todo',
+			type: 'text',
+			placeholder: 'What needs to be done?',
+			onchage: onChangeLabel,
+			value: newTask.label,
+		},
+		{
+			classes: 'new-todo-form__timer',
+			type: 'number',
+			placeholder: 'Min',
+			onchage: onChangeMin,
+			value: newTask.min,
+		},
+		{
+			classes: 'new-todo-form__timer',
+			type: 'number',
+			placeholder: 'Sec',
+			onchage: onChangeSec,
+			value: newTask.sec,
+		},
+	]
+
+	const inputs = inputForm.map(item => {
+		const { classes, type, placeholder, onchage, value } = item
+
+		return (
+			<input
+				key={placeholder}
+				type={type}
+				className={classes}
+				placeholder={placeholder}
+				onChange={onchage}
+				value={value}
+			></input>
+		)
+	})
 
 	return (
 		<form className='new-todo-form' onSubmit={onSubmit}>
-			<input
-				className='new-todo'
-				placeholder='What needs to be done?'
-				autoFocus
-				onChange={onChangeLabel}
-				value={newTask.label}
-			></input>
-			<input
-				type='number'
-				className='new-todo-form__timer'
-				placeholder='Min'
-				onChange={onChangeMin}
-				value={newTask.min}
-			></input>
-			<input
-				type='number'
-				className='new-todo-form__timer'
-				placeholder='Sec'
-				onChange={onChangeSec}
-				value={newTask.sec}
-			></input>
+			{inputs}
 			<input type='submit' className='submitTask'></input>
 		</form>
 	)
